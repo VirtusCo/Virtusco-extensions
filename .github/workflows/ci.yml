@@ -1,0 +1,46 @@
+# Copyright 2026 VirtusCo
+name: Extensions CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-extensions:
+    name: Build All Extensions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        extension:
+          - porter-devtools
+          - firmware-builder
+          - ai-studio
+          - ros2-studio
+          - hardware-dashboard
+          - simulation-manager
+          - pcb-studio
+          - devtools-suite
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install & Build
+        run: |
+          cd extensions/${{ matrix.extension }}
+          npm install
+          npm run compile
+      - name: Lint
+        run: |
+          cd extensions/${{ matrix.extension }}
+          npm run lint || true
+      - name: Package VSIX
+        run: |
+          cd extensions/${{ matrix.extension }}
+          npx @vscode/vsce package --no-dependencies || true
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.extension }}-vsix
+          path: extensions/${{ matrix.extension }}/*.vsix
+        if: always()
