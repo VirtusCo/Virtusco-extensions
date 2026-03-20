@@ -1,0 +1,174 @@
+{
+  "name": "virtus-ai-studio",
+  "displayName": "Virtus AI Studio — VirtusCo",
+  "description": "AI model training, optimization, and deployment for Porter robot — TensorFlow Lite, ONNX, and Raspberry Pi inference.",
+  "version": "0.1.0",
+  "publisher": "VirtusCo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/austin207/Porter-ROS"
+  },
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Data Science",
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "virtus-ai",
+          "title": "Virtus AI Studio",
+          "icon": "resources/icons/ai-studio-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "virtus-ai": [
+        {
+          "id": "virtus-ai.dashboard",
+          "type": "webview",
+          "name": "Dashboard"
+        },
+        {
+          "id": "virtus-ai.hardware",
+          "type": "tree",
+          "name": "Hardware"
+        },
+        {
+          "id": "virtus-ai.jobs",
+          "type": "tree",
+          "name": "Jobs & Runs"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "virtus-ai.openStudio",
+        "title": "Open AI Studio",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.probeGpu",
+        "title": "Probe GPU",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.connectRpi",
+        "title": "Connect to RPi",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.startTraining",
+        "title": "Start Training",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.cancelTraining",
+        "title": "Cancel Training",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.startExport",
+        "title": "Start Export",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.deployModel",
+        "title": "Deploy Model",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.openInference",
+        "title": "Open Inference Test",
+        "category": "Virtus AI"
+      },
+      {
+        "command": "virtus-ai.refreshHardware",
+        "title": "Refresh Hardware",
+        "category": "Virtus AI"
+      }
+    ],
+    "configuration": {
+      "title": "Virtus AI Studio",
+      "properties": {
+        "virtus-ai.rpiHost": {
+          "type": "string",
+          "default": "",
+          "description": "Hostname or IP address of the Raspberry Pi target."
+        },
+        "virtus-ai.rpiUsername": {
+          "type": "string",
+          "default": "pi",
+          "description": "SSH username for the Raspberry Pi."
+        },
+        "virtus-ai.rpiSshKeyPath": {
+          "type": "string",
+          "default": "~/.ssh/id_rsa",
+          "description": "Path to the SSH private key for RPi authentication."
+        },
+        "virtus-ai.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the Python interpreter (leave empty for auto-detect)."
+        },
+        "virtus-ai.uvPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the uv package manager binary (leave empty for auto-detect)."
+        },
+        "virtus-ai.flashPort": {
+          "type": "string",
+          "default": "/dev/ttyUSB0",
+          "description": "Serial port used for flashing firmware to the device."
+        },
+        "virtus-ai.monitorBaud": {
+          "type": "number",
+          "default": 115200,
+          "description": "Baud rate for serial monitor connections."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "virtus-ai.openStudio",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src/ webview-ui/src/ --ext .ts,.tsx",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "node-ssh": "^13.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.15.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/ssh2": "^1.15.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/vsce": "^3.2.0",
+    "esbuild": "^0.24.2",
+    "eslint": "^8.57.0",
+    "typescript": "^5.7.0"
+  }
+}

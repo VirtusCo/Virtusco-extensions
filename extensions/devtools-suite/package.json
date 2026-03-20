@@ -1,0 +1,113 @@
+{
+  "name": "virtusco-devtools-suite",
+  "displayName": "VirtusCo DevTools Suite",
+  "description": "Master extension managing all 7 VirtusCo sub-extensions as a unified development suite for Porter Robot",
+  "version": "0.1.0",
+  "publisher": "VirtusCo",
+  "icon": "resources/icons/suite-logo.svg",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "virtusco-suite",
+          "title": "VirtusCo Suite",
+          "icon": "resources/icons/suite-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "virtusco-suite": [
+        {
+          "id": "virtusco-suite.overview",
+          "name": "Overview",
+          "type": "webview"
+        },
+        {
+          "id": "virtusco-suite.extensions",
+          "name": "Extensions"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "virtuscoSuite.openSuite",
+        "title": "Open DevTools Suite",
+        "category": "VirtusCo",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "virtuscoSuite.installAll",
+        "title": "Install All Extensions",
+        "category": "VirtusCo",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "virtuscoSuite.checkDependencies",
+        "title": "Check System Dependencies",
+        "category": "VirtusCo",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "virtuscoSuite.bootstrapWorkspace",
+        "title": "Bootstrap Porter-ROS Workspace",
+        "category": "VirtusCo",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "virtuscoSuite.openExtension",
+        "title": "Open Extension",
+        "category": "VirtusCo",
+        "icon": "$(extensions)"
+      }
+    ],
+    "configuration": {
+      "title": "VirtusCo DevTools Suite",
+      "properties": {
+        "virtuscoSuite.rpiHost": {
+          "type": "string",
+          "default": "",
+          "description": "Raspberry Pi hostname or IP address."
+        },
+        "virtuscoSuite.rpiUsername": {
+          "type": "string",
+          "default": "pi",
+          "description": "Raspberry Pi SSH username."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src/ webview-ui/src/ --ext .ts,.tsx",
+    "package": "npx @vscode/vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vscode/vsce": "^2.22.0",
+    "esbuild": "^0.19.12",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.0"
+  }
+}

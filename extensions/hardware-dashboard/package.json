@@ -1,0 +1,127 @@
+{
+  "name": "virtus-hardware-dashboard",
+  "displayName": "Virtus Hardware Dashboard — VirtusCo",
+  "description": "Live hardware telemetry dashboard for the Virtus Porter robot — power rails, motor current, sensor readings, alerts",
+  "version": "0.1.0",
+  "publisher": "VirtusCo",
+  "icon": "resources/icons/hw-logo.svg",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "virtus-hw",
+          "title": "Virtus Hardware Dashboard",
+          "icon": "resources/icons/hw-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "virtus-hw": [
+        {
+          "id": "virtus-hw.statusView",
+          "name": "Status",
+          "type": "webview"
+        },
+        {
+          "id": "virtus-hw.alertsView",
+          "name": "Alerts"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "virtus-hw.openDashboard",
+        "title": "Open Hardware Dashboard",
+        "category": "Virtus HW",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "virtus-hw.connect",
+        "title": "Connect to Telemetry Port",
+        "category": "Virtus HW",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "virtus-hw.disconnect",
+        "title": "Disconnect from Telemetry Port",
+        "category": "Virtus HW",
+        "icon": "$(debug-disconnect)"
+      },
+      {
+        "command": "virtus-hw.autoDetect",
+        "title": "Auto-Detect Telemetry Port",
+        "category": "Virtus HW",
+        "icon": "$(search)"
+      },
+      {
+        "command": "virtus-hw.clearAlerts",
+        "title": "Clear All Alerts",
+        "category": "Virtus HW",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "virtus-hw.clearAlerts",
+          "when": "view == virtus-hw.alertsView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Virtus Hardware Dashboard",
+      "properties": {
+        "virtus-hw.serialPort": {
+          "type": "string",
+          "default": "",
+          "description": "Serial port for telemetry data. Leave empty for auto-detect."
+        },
+        "virtus-hw.baudRate": {
+          "type": "number",
+          "default": 115200,
+          "description": "Baud rate for telemetry serial connection."
+        },
+        "virtus-hw.alertSound": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play a sound when critical alerts are triggered."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src/ webview-ui/src/ --ext .ts,.tsx",
+    "package": "npx @vscode/vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@serialport/parser-readline": "^12.0.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vscode/vsce": "^2.22.0",
+    "esbuild": "^0.19.12",
+    "eslint": "^8.56.0",
+    "serialport": "^12.0.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.0"
+  }
+}

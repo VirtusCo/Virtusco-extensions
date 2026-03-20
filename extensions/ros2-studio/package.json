@@ -1,0 +1,147 @@
+{
+  "name": "virtus-ros2-studio",
+  "displayName": "Virtus ROS 2 Studio — VirtusCo",
+  "description": "ROS 2 development environment for the Porter robot — node graph, topic monitor, FSM viewer, ESP32 bridge debugger, and launch builder.",
+  "version": "0.1.0",
+  "publisher": "VirtusCo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/austin207/Porter-ROS"
+  },
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "virtus-ros2",
+          "title": "Virtus ROS 2 Studio",
+          "icon": "resources/icons/ros2-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "virtus-ros2": [
+        {
+          "id": "virtus-ros2.status",
+          "type": "webview",
+          "name": "Status"
+        },
+        {
+          "id": "virtus-ros2.nodes",
+          "type": "tree",
+          "name": "Nodes"
+        },
+        {
+          "id": "virtus-ros2.topics",
+          "type": "tree",
+          "name": "Topics"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "virtus-ros2.openStudio",
+        "title": "Open ROS 2 Studio",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.refreshGraph",
+        "title": "Refresh Node Graph",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.connectRos2",
+        "title": "Connect to ROS 2",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.runCommand",
+        "title": "Run ROS 2 Command",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.createWorkspace",
+        "title": "Create ROS 2 Workspace",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.createPackage",
+        "title": "Create ROS 2 Package",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.openProject",
+        "title": "Open ROS 2 Project",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.importWorkspace",
+        "title": "Import ROS 2 Workspace",
+        "category": "Virtus ROS 2"
+      },
+      {
+        "command": "virtus-ros2.generatePackage",
+        "title": "Generate ROS 2 Package from Canvas",
+        "category": "Virtus ROS 2"
+      }
+    ],
+    "configuration": {
+      "title": "Virtus ROS 2 Studio",
+      "properties": {
+        "virtus-ros2.rosbridgePort": {
+          "type": "number",
+          "default": 9090,
+          "description": "Port number for the rosbridge WebSocket server."
+        },
+        "virtus-ros2.useWsl": {
+          "type": "boolean",
+          "default": false,
+          "description": "Prefix ROS 2 CLI commands with 'wsl' (auto-detected on Windows)."
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "virtus-ros2.openStudio",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src/ webview-ui/src/ --ext .ts,.tsx",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.4.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ws": "^8.18.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@types/vscode": "^1.85.0",
+    "@types/ws": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/vsce": "^3.2.0",
+    "esbuild": "^0.24.2",
+    "eslint": "^8.57.0",
+    "typescript": "^5.7.0"
+  }
+}

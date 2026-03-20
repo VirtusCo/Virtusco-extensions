@@ -1,0 +1,10 @@
+.gitignore
+src/**
+webview-ui/**
+tsconfig.json
+tsconfig.webview.json
+esbuild.config.js
+.eslintrc.json
+node_modules/**
+test/**
+**/*.map

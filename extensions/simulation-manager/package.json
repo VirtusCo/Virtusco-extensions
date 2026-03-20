@@ -1,0 +1,112 @@
+{
+  "name": "virtus-simulation-manager",
+  "displayName": "Virtus Simulation Manager — VirtusCo",
+  "description": "Gazebo simulation manager for the Virtus Porter robot (ROS 2 Jazzy)",
+  "version": "0.1.0",
+  "publisher": "VirtusCo",
+  "icon": "resources/icons/sim-logo.svg",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "virtus-sim",
+          "title": "Virtus Simulation Manager",
+          "icon": "resources/icons/sim-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "virtus-sim": [
+        {
+          "id": "virtusSim.statusView",
+          "name": "Status",
+          "type": "webview"
+        },
+        {
+          "id": "virtusSim.processesView",
+          "name": "Processes"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "virtusSim.openSimManager",
+        "title": "Open Simulation Manager",
+        "category": "Virtus Sim",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "virtusSim.launchProfile",
+        "title": "Launch Profile",
+        "category": "Virtus Sim",
+        "icon": "$(play)"
+      },
+      {
+        "command": "virtusSim.stopAll",
+        "title": "Stop All Processes",
+        "category": "Virtus Sim",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "virtusSim.recordBag",
+        "title": "Record Bag",
+        "category": "Virtus Sim",
+        "icon": "$(record)"
+      },
+      {
+        "command": "virtusSim.stopRecording",
+        "title": "Stop Recording",
+        "category": "Virtus Sim",
+        "icon": "$(primitive-square)"
+      }
+    ],
+    "configuration": {
+      "title": "Virtus Simulation Manager",
+      "properties": {
+        "virtus-sim.defaultWorld": {
+          "type": "string",
+          "default": "airport_terminal.world",
+          "description": "Default Gazebo world file to load."
+        },
+        "virtus-sim.gazeboTimeout": {
+          "type": "number",
+          "default": 30,
+          "description": "Timeout in seconds for Gazebo to start."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src/ webview-ui/src/ --ext .ts,.tsx",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "precompile": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vscode/vsce": "^2.22.0",
+    "esbuild": "^0.19.12",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.0"
+  }
+}

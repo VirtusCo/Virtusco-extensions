@@ -1,0 +1,196 @@
+{
+  "name": "virtus-firmware-builder",
+  "displayName": "Virtus Firmware Builder — VirtusCo",
+  "description": "Visual node-based firmware development tool for ESP32 (Zephyr RTOS)",
+  "version": "0.2.0",
+  "publisher": "VirtusCo",
+  "icon": "resources/icons/virtus-logo.svg",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "virtus-firmware",
+          "title": "Virtus Firmware Builder",
+          "icon": "resources/icons/virtus-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "virtus-firmware": [
+        {
+          "id": "virtus.projectView",
+          "name": "Project",
+          "type": "webview"
+        },
+        {
+          "id": "virtus.boardView",
+          "name": "Board & Peripherals"
+        },
+        {
+          "id": "virtus.actionsView",
+          "name": "Build & Flash"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "virtus.boardView",
+        "contents": "No board selected.\n[Select Board](command:virtus.selectBoard)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "virtus.openBuilder",
+        "title": "Open Firmware Builder Canvas",
+        "category": "Virtus",
+        "icon": "$(circuit-board)"
+      },
+      {
+        "command": "virtus.createProject",
+        "title": "Create New Zephyr Project",
+        "category": "Virtus",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "virtus.openProject",
+        "title": "Open Existing Project",
+        "category": "Virtus",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "virtus.selectBoard",
+        "title": "Select Board",
+        "category": "Virtus",
+        "icon": "$(motherboard)"
+      },
+      {
+        "command": "virtus.generateCode",
+        "title": "Generate Firmware Code",
+        "category": "Virtus",
+        "icon": "$(code)"
+      },
+      {
+        "command": "virtus.buildFirmware",
+        "title": "Build Firmware (west build)",
+        "category": "Virtus",
+        "icon": "$(tools)"
+      },
+      {
+        "command": "virtus.flashFirmware",
+        "title": "Flash Firmware (west flash)",
+        "category": "Virtus",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "virtus.openSerialMonitor",
+        "title": "Open Serial Monitor",
+        "category": "Virtus",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "virtus.runMenuconfig",
+        "title": "Open Menuconfig",
+        "category": "Virtus",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "virtus.cleanBuild",
+        "title": "Clean Build",
+        "category": "Virtus",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "virtus.refreshBoard",
+        "title": "Refresh Board Info",
+        "category": "Virtus",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "virtus.refreshBoard",
+          "when": "view == virtus.boardView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "virtus.openBuilder",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v"
+      }
+    ],
+    "configuration": {
+      "title": "Virtus Firmware Builder",
+      "properties": {
+        "virtus.zephyrBase": {
+          "type": "string",
+          "default": "",
+          "description": "Path to Zephyr base directory (ZEPHYR_BASE). Leave empty for auto-detect."
+        },
+        "virtus.westPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to west binary. Leave empty for auto-detect."
+        },
+        "virtus.selectedBoard": {
+          "type": "string",
+          "default": "esp32_devkitc_wroom",
+          "description": "Currently selected board for builds."
+        },
+        "virtus.flashPort": {
+          "type": "string",
+          "default": "/dev/ttyUSB0",
+          "description": "Serial port for flashing (COM3 on Windows)."
+        },
+        "virtus.flashBaud": {
+          "type": "number",
+          "default": 460800,
+          "description": "Baud rate for esptool flashing."
+        },
+        "virtus.monitorBaud": {
+          "type": "number",
+          "default": 115200,
+          "description": "Baud rate for serial monitor."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch",
+    "lint": "eslint src/ webview-ui/src/ --ext .ts,.tsx",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "precompile": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "@vscode/vsce": "^2.22.0",
+    "esbuild": "^0.19.12",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.0.0",
+    "lucide-react": "^0.312.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.0"
+  }
+}

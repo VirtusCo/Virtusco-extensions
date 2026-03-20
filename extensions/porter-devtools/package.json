@@ -1,0 +1,433 @@
+{
+  "name": "porter-devtools",
+  "displayName": "Porter DevTools — VirtusCo",
+  "description": "Internal developer tool for flashing firmware and deploying software to Porter Robot hardware",
+  "version": "0.1.0",
+  "publisher": "virtusco",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/austin207/Porter-ROS.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "porter",
+    "robot",
+    "esp32",
+    "firmware",
+    "flash",
+    "zephyr",
+    "ros2"
+  ],
+  "activationEvents": [
+    "onView:porterRobot.devicesView"
+  ],
+  "main": "./out/src/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "porter-robot",
+          "title": "Porter DevTools",
+          "icon": "resources/icons/porter-logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "porter-robot": [
+        {
+          "id": "porterRobot.devicesView",
+          "name": "Devices"
+        },
+        {
+          "id": "porterRobot.releasesView",
+          "name": "Releases"
+        },
+        {
+          "id": "porterRobot.actionsView",
+          "name": "Actions"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "porterRobot.devicesView",
+        "contents": "No devices detected.\nConnect an ESP32 via USB or configure RPi SSH.\n[Scan Devices](command:porterRobot.refreshDevices)\n[Configure RPi](command:porterRobot.configureRpi)"
+      },
+      {
+        "view": "porterRobot.releasesView",
+        "contents": "No releases loaded.\n[Refresh Releases](command:porterRobot.refreshReleases)"
+      },
+      {
+        "view": "porterRobot.actionsView",
+        "contents": "Connect a device and download artifacts to see available actions."
+      }
+    ],
+    "commands": [
+      {
+        "command": "porterRobot.refreshDevices",
+        "title": "Scan Devices",
+        "category": "Porter",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "porterRobot.identifyDevice",
+        "title": "Identify Device",
+        "category": "Porter",
+        "icon": "$(info)"
+      },
+      {
+        "command": "porterRobot.configureRpi",
+        "title": "Configure Raspberry Pi",
+        "category": "Porter",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "porterRobot.refreshReleases",
+        "title": "Refresh Releases",
+        "category": "Porter",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "porterRobot.downloadArtifact",
+        "title": "Download Artifact",
+        "category": "Porter",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "porterRobot.downloadAllArtifacts",
+        "title": "Download All Artifacts",
+        "category": "Porter",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "porterRobot.flashMotorController",
+        "title": "Flash Motor Controller",
+        "category": "Porter",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "porterRobot.flashSensorFusion",
+        "title": "Flash Sensor Fusion",
+        "category": "Porter",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "porterRobot.flashCustom",
+        "title": "Flash Custom Binary",
+        "category": "Porter",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "porterRobot.westFlashMotor",
+        "title": "West Flash Motor Controller",
+        "category": "Porter",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "porterRobot.westFlashSensor",
+        "title": "West Flash Sensor Fusion",
+        "category": "Porter",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "porterRobot.selectFlashMode",
+        "title": "Select Flash Mode",
+        "category": "Porter",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "porterRobot.quickDeploy",
+        "title": "Quick Deploy",
+        "category": "Porter",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "porterRobot.deployDocker",
+        "title": "Deploy Docker Image to RPi",
+        "category": "Porter",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "porterRobot.deployFlutterGui",
+        "title": "Deploy Flutter GUI to RPi",
+        "category": "Porter",
+        "icon": "$(rocket)"
+      },
+      {
+        "command": "porterRobot.openSerialMonitor",
+        "title": "Open Serial Monitor",
+        "category": "Porter",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "porterRobot.closeSerialMonitor",
+        "title": "Close Serial Monitor",
+        "category": "Porter",
+        "icon": "$(close)"
+      },
+      {
+        "command": "porterRobot.verifyChecksums",
+        "title": "Verify Checksums",
+        "category": "Porter",
+        "icon": "$(verified)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "porterRobot.refreshDevices",
+          "when": "view == porterRobot.devicesView",
+          "group": "navigation"
+        },
+        {
+          "command": "porterRobot.configureRpi",
+          "when": "view == porterRobot.devicesView",
+          "group": "navigation"
+        },
+        {
+          "command": "porterRobot.refreshReleases",
+          "when": "view == porterRobot.releasesView",
+          "group": "navigation"
+        },
+        {
+          "command": "porterRobot.selectFlashMode",
+          "when": "view == porterRobot.actionsView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "porterRobot.flashMotorController",
+          "when": "view == porterRobot.devicesView && viewItem == esp32Device",
+          "group": "inline@1"
+        },
+        {
+          "command": "porterRobot.openSerialMonitor",
+          "when": "view == porterRobot.devicesView && viewItem == esp32Device",
+          "group": "inline@2"
+        },
+        {
+          "command": "porterRobot.identifyDevice",
+          "when": "view == porterRobot.devicesView && viewItem == esp32Device",
+          "group": "inline@3"
+        },
+        {
+          "command": "porterRobot.deployDocker",
+          "when": "view == porterRobot.devicesView && viewItem == rpiTarget",
+          "group": "inline@1"
+        },
+        {
+          "command": "porterRobot.deployFlutterGui",
+          "when": "view == porterRobot.devicesView && viewItem == rpiTarget",
+          "group": "inline@2"
+        },
+        {
+          "command": "porterRobot.downloadArtifact",
+          "when": "view == porterRobot.releasesView && viewItem == artifact",
+          "group": "inline@1"
+        },
+        {
+          "command": "porterRobot.quickDeploy",
+          "when": "view == porterRobot.releasesView && viewItem == release",
+          "group": "inline@1"
+        },
+        {
+          "command": "porterRobot.downloadAllArtifacts",
+          "when": "view == porterRobot.releasesView && viewItem == release",
+          "group": "inline@2"
+        },
+        {
+          "command": "porterRobot.verifyChecksums",
+          "when": "view == porterRobot.releasesView && viewItem == release",
+          "group": "inline@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "porterRobot.downloadArtifact",
+          "when": "false"
+        },
+        {
+          "command": "porterRobot.downloadAllArtifacts",
+          "when": "false"
+        },
+        {
+          "command": "porterRobot.identifyDevice",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Porter DevTools",
+      "properties": {
+        "porterRobot.github.token": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "GitHub Personal Access Token for API access. Required for private repos. Raises rate limit from 60 to 5000 requests/hr.",
+          "order": 1
+        },
+        "porterRobot.github.owner": {
+          "type": "string",
+          "default": "austin207",
+          "description": "GitHub repository owner",
+          "order": 2
+        },
+        "porterRobot.github.repo": {
+          "type": "string",
+          "default": "Porter-ROS",
+          "description": "GitHub repository name",
+          "order": 3
+        },
+        "porterRobot.flash.mode": {
+          "type": "string",
+          "default": "esptool",
+          "enum": [
+            "esptool",
+            "west"
+          ],
+          "enumDescriptions": [
+            "Flash pre-built .bin files from GitHub Releases using esptool.py",
+            "Flash from local Zephyr build directory using west flash"
+          ],
+          "markdownDescription": "ESP32 flash mode. Use `esptool` for release binaries, `west` for local builds.",
+          "order": 10
+        },
+        "porterRobot.esptool.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Custom path to `esptool.py`. Leave empty for auto-detection (checks PATH, pip install locations).",
+          "order": 11
+        },
+        "porterRobot.flash.baudRate": {
+          "type": "number",
+          "default": 460800,
+          "description": "Baud rate for esptool flashing (460800 recommended for speed)",
+          "order": 12
+        },
+        "porterRobot.flash.address": {
+          "type": "string",
+          "default": "0x1000",
+          "description": "Flash base address for ESP32 (Zephyr default: 0x1000)",
+          "order": 13
+        },
+        "porterRobot.flash.chip": {
+          "type": "string",
+          "default": "esp32",
+          "enum": [
+            "esp32",
+            "esp32s2",
+            "esp32s3",
+            "esp32c3"
+          ],
+          "description": "Target ESP32 chip variant",
+          "order": 14
+        },
+        "porterRobot.west.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Custom path to `west` binary. Leave empty for auto-detection.",
+          "order": 15
+        },
+        "porterRobot.west.buildDir": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Zephyr build directory for `west flash`. If empty, will prompt for selection.",
+          "order": 16
+        },
+        "porterRobot.rpi.host": {
+          "type": "string",
+          "default": "",
+          "description": "Raspberry Pi IP address or hostname",
+          "order": 20
+        },
+        "porterRobot.rpi.username": {
+          "type": "string",
+          "default": "pi",
+          "description": "Raspberry Pi SSH username",
+          "order": 21
+        },
+        "porterRobot.rpi.sshKeyPath": {
+          "type": "string",
+          "default": "~/.ssh/id_rsa",
+          "description": "Path to SSH private key for RPi authentication",
+          "order": 22
+        },
+        "porterRobot.rpi.dockerComposePath": {
+          "type": "string",
+          "default": "/home/pi/porter/docker/docker-compose.prod.yml",
+          "description": "Path to docker-compose.prod.yml on the Raspberry Pi",
+          "order": 23
+        },
+        "porterRobot.rpi.guiInstallPath": {
+          "type": "string",
+          "default": "/home/pi/porter/gui",
+          "description": "Flutter GUI installation path on the Raspberry Pi",
+          "order": 24
+        },
+        "porterRobot.serial.baudRate": {
+          "type": "number",
+          "default": 115200,
+          "description": "Baud rate for serial monitor (Zephyr console default: 115200)",
+          "order": 30
+        },
+        "porterRobot.serial.autoScroll": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scroll serial monitor to latest output",
+          "order": 31
+        },
+        "porterRobot.artifactsDir": {
+          "type": "string",
+          "default": "~/.porter-robot/artifacts",
+          "description": "Directory for downloaded release artifacts",
+          "order": 40
+        },
+        "porterRobot.deviceDetection.pollIntervalMs": {
+          "type": "number",
+          "default": 3000,
+          "minimum": 1000,
+          "maximum": 30000,
+          "description": "USB device detection polling interval in milliseconds",
+          "order": 41
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "lint:fix": "eslint src --ext ts --fix",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "install-extension": "code --install-extension porter-devtools-*.vsix"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.0",
+    "@serialport/parser-readline": "^12.0.0",
+    "serialport": "^12.0.0",
+    "ssh2": "^1.16.0"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "@types/ssh2": "^1.15.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.56.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.3.3"
+  }
+}

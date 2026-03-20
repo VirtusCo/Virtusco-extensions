@@ -1,0 +1,8 @@
+src/**
+webview-ui/**
+python/**
+tsconfig*
+esbuild*
+.eslintrc*
+node_modules/**
+test/**
